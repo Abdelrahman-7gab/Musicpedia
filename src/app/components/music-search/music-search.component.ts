@@ -24,7 +24,7 @@ export class MusicSearchComponent implements OnInit {
   }
 
   setSearchParam(param: string): void {
-    this.searchService.searchParam = param;
+    this.searchService.searchType = param;
   }
 
   startSearch(word: string): void {
