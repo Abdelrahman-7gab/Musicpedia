@@ -11,6 +11,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { FormsModule } from '@angular/forms';
 import { SearchResultsPageComponent } from './components/search-results-page/search-results-page.component';
 import { HttpClientModule } from '@angular/common/http';
+import { CardComponent } from './components/card/card.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { HttpClientModule } from '@angular/common/http';
     HomePageComponent,
     FooterComponent,
     SearchResultsPageComponent,
+    CardComponent,
   ],
   imports: [HttpClientModule,BrowserModule, AppRoutingModule, BrowserAnimationsModule,FormsModule],
   providers: [],

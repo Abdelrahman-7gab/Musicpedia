@@ -1,3 +1,3 @@
 <div *ngFor="let result of searchService.searchResults">
-    {{result.title}}
+    <app-card [result] = result></app-card>
 </div>

@@ -2,33 +2,28 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
-import { TrackAPI } from './Imusic';
+import { TrackAPI,IArtist,ITrack,IAlbum } from './Imusic';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SearchService {
-  searchType:string = "";
-  query:string = "";
-  viewType:string = "";
-  viewQuery:string = "";
-  searchResults:any;
-  
+
+  searchResults:Array<any> = [];
   serverUrl:string = "http://localhost:3000";
 
   constructor(private router:Router, private http:HttpClient) { }
 
-  startSearch(word:string):void{
-    let trimmedWord = word.trim();
-    if(trimmedWord != ""){
-      this.query = trimmedWord;
-      this.router.navigateByUrl(`search?st=${this.searchType}&sq=${this.query}`);
-      this.getSearchResults();
+  startSearch(word:string,searchType:string):void{
+    let query = word.trim();
+    if(query != ""){
+      this.router.navigateByUrl(`search?t=${searchType}&q=${query}`);
     }
   }
 
-  async getSearchResults():Promise<void>{
-       const result:any = await lastValueFrom(this.http.get(`${this.serverUrl}/search/${this.searchType}/${this.query}`));
+  async getSearchResults(searchType:string,query:string):Promise<void>{
+       const result:TrackAPI = await lastValueFrom(this.http.get<TrackAPI>(`${this.serverUrl}/search/${searchType}/${query}`));
        this.searchResults = result.data;
+       console.log(result)
   }
 }
