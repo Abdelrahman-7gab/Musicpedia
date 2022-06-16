@@ -1,0 +1,23 @@
+#navbar{
+    background: linear-gradient(to left, #57ABC1, transparent);;
+    .logo{
+        height: 6rem;
+        max-width: 100%;
+    }
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    justify-content: space-between;
+}
+
+::ng-deep .search-window{
+    margin-top: 18px;
+
+    .query-container{
+        display: none;
+    }
+
+    .large-input{
+        width: 20vw !important;
+    }
+}

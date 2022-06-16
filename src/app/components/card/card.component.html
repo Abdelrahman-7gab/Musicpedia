@@ -1,1 +1,27 @@
-<p>card works!</p>
+<div class="card-container">
+  <div class="album">
+    <div class="subheader">Album</div>
+    <fit-text height="25px" width="80%" style="justify-content:center; align-items: center;" [calcOnResize]="true">{{ result.album.title }}</fit-text>
+  </div>
+
+  <img
+    class="card-image"
+    [src]="
+      'https://cdns-images.dzcdn.net/images/cover/' +
+      result.md5_image +
+      '/264x264.jpg'
+    "
+  />
+
+  <fit-text height="30px" width="100%" style="justify-content:center; align-items: center;" [calcOnResize]="true">{{ result.title_short }}</fit-text>
+
+  <app-recording-player
+    (audioIsPlaying)="audioIsPlaying.emit($event)"
+    [audioLink]="result.preview"
+    [playingAudio]="playingAudio"
+  ></app-recording-player>
+
+  <div class="card-artist">
+    <span class="by">by</span>  {{ result.artist.name }}
+  </div>
+</div>
