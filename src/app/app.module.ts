@@ -18,9 +18,11 @@ import { AlbumComponent } from './pages/album/album.component';
 import { ArtistComponent } from './pages/artist/artist.component';
 import { TrackComponent } from './pages/track/track.component';
 import { StoreModule } from '@ngrx/store';
-import { playAudioReducer } from './state/playingAudio/playingAudio.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
+import { reducers } from './state/app.state';
+import { EffectsModule } from '@ngrx/effects';
+import { searchEffects } from './state/searchResults/searchResults.effects';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,8 @@ import { environment } from 'src/environments/environment';
     BrowserAnimationsModule,
     FormsModule,
     NgxFitTextModule,
-    StoreModule.forRoot({ playingAudio: playAudioReducer }),
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot([searchEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25,logOnly: environment.production }),
   ],
   providers: [],
