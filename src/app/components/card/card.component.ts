@@ -4,9 +4,9 @@ import {
   Input,
   ChangeDetectorRef,
 } from '@angular/core';
-import { selectUUID } from 'src/app/state/playingAudio/playingAudio.selectors';
-import { Store } from '@ngrx/store';
+import { createSelector, Store } from '@ngrx/store';
 import { ICard } from 'src/app/services/Imusic';
+import { featureSelector } from 'src/app/state/playingAudio/playingAudio.store';
 
 @Component({
   selector: 'app-card',
@@ -19,7 +19,7 @@ export class CardComponent implements OnInit {
   cardType: string = '';
   active: boolean = false;
   uuid: string = 'default';
-  activeAudioUUid$ = this.store.select(selectUUID);
+  activeAudioUUid$ = this.store.select(createSelector(featureSelector, (state) => state.uuid));
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
