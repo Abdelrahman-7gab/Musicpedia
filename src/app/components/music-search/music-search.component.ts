@@ -11,7 +11,13 @@ export class MusicSearchComponent implements OnInit {
 
 
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+    this.searchService.searchBarType.subscribe((type) => {
+      this.searchType = type;
+    });
+    
+  }
 
   AorAn(word: string): string {
     const firstLetter = word.charAt(0)
@@ -25,10 +31,6 @@ export class MusicSearchComponent implements OnInit {
       return 'a ' + word;
 
     return 'an ' + word;
-  }
-
-  setSearchType(type: string): void {
-    this.searchType = type;
   }
 
   startSearch(word: string): void {

@@ -1,12 +1,24 @@
 <div class="search-window">
+
   <form (ngSubmit)="startSearch(searchInputForm.value)">
     <div class="search-input-container">
       <input
+      [ngModel] = "searchService.searchBarValue"
         #searchInputForm
         class="large-input"
         type="text"
         placeholder="search for {{ AorAn(searchType) }} "
+        name="search-input"
       />
+
+      <div class="query-container">
+
+        <select name="type" id="type" [(ngModel)]="searchType">
+          <option selected value="track">Track</option>
+          <option value="album">Album</option>
+          <option value="artist">Artist</option>
+        </select>
+    </div>
 
       <button class="search-icon-button">
         <img
@@ -17,30 +29,4 @@
       </button>
     </div>
   </form>
-
-  <div class="query-container">
-    <ul>
-      <li
-        [ngClass]="{ selectedChoice: searchType === 'track' }"
-        class="queryChoice"
-        (click)="setSearchType('track')"
-      >
-        Track
-      </li>
-      <li
-        [ngClass]="{ selectedChoice: searchType === 'album' }"
-        class="queryChoice"
-        (click)="setSearchType('album')"
-      >
-        Album
-      </li>
-      <li
-        [ngClass]="{ selectedChoice: searchType === 'artist' }"
-        class="queryChoice"
-        (click)="setSearchType('artist')"
-      >
-        Artist
-      </li>
-    </ul>
-  </div>
 </div>
