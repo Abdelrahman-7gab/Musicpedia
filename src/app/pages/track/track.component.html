@@ -1,8 +1,6 @@
 <div class="trackPageContainer">
   <app-card *ngIf="card.preview != null" [result]="card"></app-card>
-  <div class="lyrics-section">
     <div class="lyricsContainer" [innerText]="lyrics$ | async"></div>
-  </div>
 
   <div class="deezer">
     Release Date: {{ card.release_date }}<br />
