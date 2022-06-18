@@ -20,9 +20,8 @@ import { TrackComponent } from './pages/track/track.component';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
-import { reducers } from './state/app.state';
+import { reducers,effects } from './state/app.state';
 import { EffectsModule } from '@ngrx/effects';
-import { searchEffects } from './state/searchResults/searchResults.effects';
 
 @NgModule({
   declarations: [
@@ -46,7 +45,7 @@ import { searchEffects } from './state/searchResults/searchResults.effects';
     FormsModule,
     NgxFitTextModule,
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([searchEffects]),
+    EffectsModule.forRoot(effects),
     StoreDevtoolsModule.instrument({ maxAge: 25,logOnly: environment.production }),
   ],
   providers: [],

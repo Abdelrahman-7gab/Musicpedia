@@ -1,6 +1,6 @@
-<div class="card-container" [ngClass]="{'track-container':result.type=='track','active':active}">
-  <div class="album" *ngIf="result.type != 'artist'">
-    <div class="subheader" *ngIf="result.type == 'track'">Album</div>
+<div class="card-container" [ngClass]="{'track-container':cardType=='track','active':active}" (click)="cardClick()">
+  <div class="album" *ngIf="cardType != 'artist'">
+    <div class="subheader" *ngIf="cardType == 'track'">Album</div>
     <fit-text
       height="25px"
       width="80%"
@@ -12,8 +12,8 @@
 
   <img
     class="card-image"
-    [ngClass]="{ 'track-card': result.type == 'track'}"
-    [src]="result.type!='artist'?'https://cdns-images.dzcdn.net/images/cover/' + result.md5_image +'/264x264.jpg' : result.picture_medium"
+    [ngClass]="{ 'track-card': cardType == 'track'}"
+    [src]="cardType!='artist'?'https://cdns-images.dzcdn.net/images/cover/' + result.md5_image +'/264x264.jpg' : result.picture_medium"
   />
 
   <div class="song-title">
@@ -22,20 +22,20 @@
       width="100%"
       style="justify-content: center; align-items: center"
       [calcOnResize]="true"
-      >{{ result.type =='artist'?result.artistName:(result.type == "track" ? result.title_short : (result.nb_tracks!= null && result.nb_tracks > 1?result.nb_tracks + " Songs":"Single")) }}
+      >{{ cardType =='artist'?result.artistName:(cardType == "track" ? result.title_short : (result.nb_tracks!= null && result.nb_tracks > 1?result.nb_tracks + " Songs":"Single")) }}
       </fit-text
       >
-      <span class="explicit" *ngIf="result.type=='track' && result.explicit_lyrics">E</span>
+      <span class="explicit" *ngIf="cardType=='track' && result.explicit_lyrics">E</span>
   </div>
 
   <app-recording-player
-    *ngIf="result.type == 'track'"
+    *ngIf="cardType == 'track'"
     (pauseAudio)="setActive(false)"
     (uuidEmitter)="setUuid($event)"
     [audioLink]="result.preview"
   ></app-recording-player>
 
-  <div class="card-artist" *ngIf="result.type !='artist'">
+  <div class="card-artist" *ngIf="cardType !='artist'">
     <span class="by">by</span> {{ result.artistName }}
   </div>
 </div>
