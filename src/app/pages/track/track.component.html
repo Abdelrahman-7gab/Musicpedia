@@ -1,3 +1,3 @@
-<div class="lyricsContainer">
-    {{lyrics$|async}}
+<img [src]="(song$|async)?.image500" alt="" srcset="">
+<div class="lyricsContainer" [innerText] = "(lyricsStatus$|async) == 'loadingLyrics'?'Trying to get Lyrics ...':(lyrics$|async)">
 </div>
