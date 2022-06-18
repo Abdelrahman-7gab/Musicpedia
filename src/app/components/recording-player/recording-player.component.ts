@@ -43,7 +43,11 @@ export class RecordingPlayerComponent implements AfterViewInit {
   
   }
 
-  playPause() {
+  stopPropagation(event: Event): void {
+    event.stopPropagation();
+  }
+
+  playPause(): void  {
     if(this.readyToPlay){
     this.wave.playPause();
     this.isPlaying = !this.isPlaying;
