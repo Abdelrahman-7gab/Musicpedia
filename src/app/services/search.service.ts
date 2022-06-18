@@ -47,4 +47,8 @@ export class SearchService {
       );
     }
   }
+
+  showLatestSearch():void{
+    this.router.navigateByUrl(`search?t=${this.lastSearchType}&q=${this.lastQuery}`);
+  }
 }
