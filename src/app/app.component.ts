@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { SearchService } from './services/search.service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +9,6 @@ export class AppComponent {
   title = 'Musicpedia';
 
   constructor(
-    private searchService: SearchService
   ) {
 
   }
