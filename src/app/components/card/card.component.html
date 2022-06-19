@@ -1,22 +1,26 @@
-<div class="card-container" [ngClass]="{'track-container':cardType=='track','active':active}" (click)="cardClick()">
+<div class="card-container" [ngClass]="{'track-container':cardType=='track','active':active}">
   <div class="album" *ngIf="cardType != 'artist'">
     <div class="subheader" *ngIf="cardType == 'track'">Album</div>
     <fit-text
       height="25px"
       width="80%"
+      class="album-title"
       style="justify-content: center; align-items: center"
       [calcOnResize]="true"
       >{{result.albumTitle}}</fit-text
     >
   </div>
 
-  <img
-    class="card-image"
-    [ngClass]="{ 'track-card': cardType == 'track'}"
-    [src]="cardType!='artist'?result.image264 : result.picture_medium"
-  />
 
-  <div class="song-title">
+  <a [routerLink]="['/track']" [queryParams]="{id:result.id}" class="image-container">
+    <img
+      class="card-image"
+      [ngClass]="{ 'track-card': cardType == 'track'}"
+      [src]="cardType!='artist'?result.image264 : result.picture_medium"
+    />
+  </a>
+
+  <a class="song-title" [routerLink]="['/track']" [queryParams]="{id:result.id}">
     <fit-text
       height="30px"
       width="100%"
@@ -26,7 +30,7 @@
       </fit-text
       >
       <span class="explicit" *ngIf="cardType=='track' && result.explicit_lyrics">E</span>
-  </div>
+  </a>
 
   <app-recording-player
     *ngIf="cardType == 'track'"
@@ -36,6 +40,6 @@
   ></app-recording-player>
 
   <div class="card-artist" *ngIf="cardType !='artist'">
-    <span class="by">by</span> {{ result.artistName }}
+    <span class="by">by</span> <span class="artist-title">{{ result.artistName }}</span>
   </div>
 </div>

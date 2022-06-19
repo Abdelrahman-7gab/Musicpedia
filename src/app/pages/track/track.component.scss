@@ -56,7 +56,7 @@
     border-left: 0;
 }
 
-:host ::ng-deep .card-container.active{
+:host ::ng-deep .card-container.active,:host ::ng-deep .card-container:hover{
     transform: none !important;
 }
 

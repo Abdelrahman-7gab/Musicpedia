@@ -45,6 +45,7 @@ export class RecordingPlayerComponent implements AfterViewInit {
 
   stopPropagation(event: Event): void {
     event.stopPropagation();
+    event.preventDefault();
   }
 
   playPause(): void  {
