@@ -3,6 +3,8 @@ import {
   OnInit,
   Input,
   ChangeDetectorRef,
+  OnChanges,
+  SimpleChanges,
 } from '@angular/core';
 import {  Store } from '@ngrx/store';
 import { ICard } from 'src/app/services/Imusic';
@@ -14,9 +16,9 @@ import { Router } from '@angular/router';
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss'],
 })
-export class CardComponent implements OnInit {
+export class CardComponent implements OnInit, OnChanges {
   @Input()
-  result: ICard = {id:-1,type:"null"};
+  result: ICard | null= null;
   cardType: string = '';
   active: boolean = false;
   uuid: string = 'default';
@@ -28,8 +30,13 @@ export class CardComponent implements OnInit {
     private router:Router
   ) {}
 
+  ngOnChanges(changes: SimpleChanges): void
+  {
+    if(changes['result'].currentValue != null)
+    this.cardType = this.result!.type;
+  }
+
   ngOnInit(): void {
-    this.cardType = this.result.type;
     this.activeAudioUUid$.subscribe((uuid) => {
     this.setActive(uuid == this.uuid);
     });
@@ -45,7 +52,7 @@ export class CardComponent implements OnInit {
   }
 
   cardClick():void{
-    if(this.cardType=="track"){
+    if(this.cardType=="track" && this.result != null){
     this.router.navigateByUrl(`/track?id=${this.result.id}`);
     }
   }

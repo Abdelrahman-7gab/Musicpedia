@@ -24,6 +24,7 @@
     padding: 10px 15px 5px 15px;
     height: calc(100vh - 10px - 9rem);
     color: #414a62;
+    white-space: pre-line;
 }
 
 .deezer{
@@ -31,6 +32,11 @@
     margin-left: auto;
     margin-right: auto;
     color: #556080;
+
+        .deezer-logo{
+            height: 30px;
+            cursor: pointer;
+        }
 }
 
 .listen{
@@ -40,10 +46,6 @@
     align-items: center;
 }
 
-.deezer-logo{
-    height: 30px;
-    cursor: pointer;
-}
 
 :host ::ng-deep .card-container{
     color: #556080;
@@ -77,6 +79,7 @@
         margin-right: auto;
         padding: 10px;
         border-radius: 10px;
+        width: 260px;
     }
 
     .lyricsContainer{

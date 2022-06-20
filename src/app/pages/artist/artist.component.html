@@ -1,1 +1,26 @@
-<p>artist works!</p>
+<div class="artistPageContainer">
+    <div class="main-card">
+        <app-card
+          *ngIf="(artist$ | async)?.id != -1"
+          [result]="(artist$ | async)!"
+        ></app-card>
+    </div>
+    
+    <div class="albums-section">
+        <div class="subheader">Top Albums</div>
+        <div class="albumlistContainer">
+          <app-card class="artist-album" *ngFor="let album of (artist$ | async)?.albums" [result]="album">
+          </app-card>
+        </div>
+    </div>
+  
+    <div class="deezer">
+      <span class="listen">
+        view the artist on Deezer:
+        <a [href]="(artist$ | async)?.link">
+          <img class="deezer-logo" src="assets/deezer-logo.png" alt="deezer" />
+        </a>
+      </span>
+    </div>
+  </div>
+  
