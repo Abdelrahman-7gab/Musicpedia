@@ -68,7 +68,8 @@ export class ViewService {
         if (
           item.type == 'artist' &&
           this.currentStatus != 'loadedAlbums' &&
-          this.currentStatus != 'loadingAlbums'
+          this.currentStatus != 'loadingAlbums'&&
+          this.currentStatus != "failedAlbums"
         ) {
           this.store.dispatch(getAlbums({ artistID: item.id }));
         }
