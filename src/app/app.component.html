@@ -1,4 +1,6 @@
-<app-navbar *ngIf="showNavbar"></app-navbar>
-<router-outlet></router-outlet>
+<div class="full-content">
+    <app-navbar *ngIf="showNavbar"></app-navbar>
+    <router-outlet></router-outlet>
+</div>
 
 <app-footer [dropShadow]="showNavbar"></app-footer>
