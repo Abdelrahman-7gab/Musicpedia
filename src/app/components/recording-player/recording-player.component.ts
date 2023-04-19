@@ -13,6 +13,7 @@ export class RecordingPlayerComponent implements AfterViewInit,OnChanges {
   @Input() audioLink: string = "";
   @Output() audioIsPlaying = new EventEmitter<string>();
   @Input() playingAudio:string = "";
+  @Output() pauseAudio = new EventEmitter<null>();
   wave: any = null;
   uuid: string;
   readyToPlay:boolean = false;
@@ -51,12 +52,17 @@ export class RecordingPlayerComponent implements AfterViewInit,OnChanges {
     if(this.isPlaying)
     this.audioIsPlaying.emit(this.uuid);
     }
+
+    else{
+      this.pauseAudio.emit();
+    }
   }
 
   pauseIfOtherIsPlaying(uuid:string){
     if(this.uuid !== uuid && this.wave != null){
       this.wave.pause();
       this.isPlaying = false;
+      this.pauseAudio.emit();
     }
   }
 
@@ -98,6 +104,7 @@ export class RecordingPlayerComponent implements AfterViewInit,OnChanges {
 
     this.wave.on("finish", () => {
       this.isPlaying = false;
+      this.pauseAudio.emit()
       this.changeDetectorRef.detectChanges();
     });
   }

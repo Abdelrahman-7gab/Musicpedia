@@ -16,8 +16,10 @@ export class AppComponent {
   ) {
     this.route.queryParams.subscribe(async (params) => {
       let searchQuery = params['q'];
-
       let searchType = params['t'] || 'track';
+      
+      this.searchService.searchBarValue =searchQuery;
+      this.searchService.searchBarType.next(searchType);
 
       if (searchQuery != null) this.searchService.getSearchResults(searchType,searchQuery);
     });
