@@ -5,7 +5,7 @@
         #searchInputForm
         class="large-input"
         type="text"
-        placeholder="search for {{ AorAn(searchParam) }} "
+        placeholder="search for {{ AorAn(searchService.searchParam) }} "
       />
 
       <button class="search-icon-button">
@@ -21,21 +21,21 @@
   <div class="query-container">
     <ul>
       <li
-        [ngClass]="{ selectedChoice: searchParam === 'track' }"
+        [ngClass]="{ selectedChoice: searchService.searchParam === 'track' }"
         class="queryChoice"
         (click)="setSearchParam('track')"
       >
         Track
       </li>
       <li
-        [ngClass]="{ selectedChoice: searchParam === 'album' }"
+        [ngClass]="{ selectedChoice: searchService.searchParam === 'album' }"
         class="queryChoice"
         (click)="setSearchParam('album')"
       >
         Album
       </li>
       <li
-        [ngClass]="{ selectedChoice: searchParam === 'artist' }"
+        [ngClass]="{ selectedChoice: searchService.searchParam === 'artist' }"
         class="queryChoice"
         (click)="setSearchParam('artist')"
       >
