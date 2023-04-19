@@ -6,7 +6,7 @@
       width="80%"
       style="justify-content: center; align-items: center"
       [calcOnResize]="true"
-      >{{result.type=="track"?result.album.title:result.title }}</fit-text
+      >{{result.albumTitle}}</fit-text
     >
   </div>
 
@@ -22,7 +22,7 @@
       width="100%"
       style="justify-content: center; align-items: center"
       [calcOnResize]="true"
-      >{{ result.type =='artist'?result.name:(result.type == "track" ? result.title_short : (result.nb_tracks > 1?result.nb_tracks + " Songs":"Single")) }}
+      >{{ result.type =='artist'?result.artistName:(result.type == "track" ? result.title_short : (result.nb_tracks!= null && result.nb_tracks > 1?result.nb_tracks + " Songs":"Single")) }}
       </fit-text
       >
       <span class="explicit" *ngIf="result.type=='track' && result.explicit_lyrics">E</span>
@@ -30,13 +30,12 @@
 
   <app-recording-player
     *ngIf="result.type == 'track'"
-    (audioIsPlaying)="playAudio($event)"
     (pauseAudio)="setActive(false)"
+    (uuidEmitter)="setUuid($event)"
     [audioLink]="result.preview"
-    [playingAudio]="playingAudio"
   ></app-recording-player>
 
   <div class="card-artist" *ngIf="result.type !='artist'">
-    <span class="by">by</span> {{ result.artist.name }}
+    <span class="by">by</span> {{ result.artistName }}
   </div>
 </div>

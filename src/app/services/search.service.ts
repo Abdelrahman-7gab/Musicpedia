@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { Router  } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, lastValueFrom } from 'rxjs';
-import { TrackAPI,IArtist,ITrack,IAlbum } from './Imusic';
+import { TrackAPI,ICard,mapToICard } from './Imusic';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SearchService {
 
-  private searchResults:BehaviorSubject<any> = new BehaviorSubject<any>({});
+  private searchResults:BehaviorSubject<ICard[]> = new BehaviorSubject<ICard[]>([]);
   serverUrl:string = "http://localhost:3000";
   public searchBarValue:string = "";
   public searchBarType:BehaviorSubject<string> =new BehaviorSubject<string>("track");
@@ -25,11 +25,11 @@ export class SearchService {
 
   async getSearchResults(searchType:string,query:string):Promise<void>{
        const result:TrackAPI = await lastValueFrom(this.http.get<TrackAPI>(`${this.serverUrl}/search/${searchType}/${query}`));
-       this.searchResults.next(result);
+       this.searchResults.next(result.data.map(mapToICard));
        console.log(result)
   }
 
-  public getResults():BehaviorSubject<any>{
+  public getResults():BehaviorSubject<ICard[]>{
     return this.searchResults;
   } 
 }
