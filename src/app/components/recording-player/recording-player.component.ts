@@ -4,8 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Subject } from "rxjs";
 import { throttleTime } from "rxjs/operators";
 import { createSelector, Store } from "@ngrx/store";
-import { featureSelector,changePlayingSound,stopPlayingSound } from "src/app/state/playingAudio/playingAudio.store";
-import { AppState } from "src/app/state/app.state";
+import { changePlayingSound,stopPlayingSound,UUIDSelector } from "src/app/state/playingAudio/playingAudio.store";
 
 @Component({
   selector: "app-recording-player",
@@ -18,13 +17,13 @@ export class RecordingPlayerComponent implements AfterViewInit {
   wave: any = null;
   uuid: string;
   readyToPlay:boolean = false;
-  activeAudioUUid$ = this.store.select(createSelector(featureSelector, (state) => state.uuid));
+  activeAudioUUid$ = this.store.select(UUIDSelector);
 
   isPlaying: boolean = false;
   audioLength = new Subject<string>();
   currentLength: string = "0:00";
 
-  constructor(private changeDetectorRef:ChangeDetectorRef,private store:Store<AppState>) {
+  constructor(private changeDetectorRef:ChangeDetectorRef,private store:Store<any>) {
     this.uuid = "n" + uuidv4();
   }
 
@@ -50,16 +49,18 @@ export class RecordingPlayerComponent implements AfterViewInit {
     this.isPlaying = !this.isPlaying;
 
     if(this.isPlaying)
-    this.store.dispatch(changePlayingSound({uuid:this.uuid}));
-    }
+    this.store.dispatch(changePlayingSound(this.uuid));
 
     else{
-     this.store.dispatch(stopPlayingSound({}))
+      this.store.dispatch(stopPlayingSound({}))
+     }
+
     }
+
+
   }
 
   pauseIfOtherIsPlaying(uuid:string){
-    console.log(uuid)
     if(this.uuid !== uuid && this.wave != null){
       this.wave.pause();
       this.isPlaying = false;

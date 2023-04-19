@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { createSelector, Store } from '@ngrx/store';
 import { ICard } from 'src/app/services/Imusic';
-import { featureSelector } from 'src/app/state/playingAudio/playingAudio.store';
+import { UUIDSelector } from 'src/app/state/playingAudio/playingAudio.store';
 
 @Component({
   selector: 'app-card',
@@ -19,7 +19,7 @@ export class CardComponent implements OnInit {
   cardType: string = '';
   active: boolean = false;
   uuid: string = 'default';
-  activeAudioUUid$ = this.store.select(createSelector(featureSelector, (state) => state.uuid));
+  activeAudioUUid$ = this.store.select(UUIDSelector);
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
