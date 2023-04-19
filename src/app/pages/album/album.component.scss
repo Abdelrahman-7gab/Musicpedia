@@ -36,7 +36,7 @@
     z-index: 1000;
   }
 
-  .album-track{
+  .album-track {
     display: grid;
     place-items: center;
   }
@@ -77,7 +77,7 @@
   border-top: 0;
   border-left: 0;
 
-  a:hover {
+  .album-title a:hover {
     color: #556080 !important;
     cursor: auto !important;
   }
