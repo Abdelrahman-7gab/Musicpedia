@@ -49,6 +49,7 @@ const metadataSlice = createSlice({
     },
     getAlbums: (state, action) => {
       state.status = 'loadingAlbums';
+      state.item!.albums = [];
     },
     changeAlbums: (state, action) => {
       state.status = 'loadedAlbums';
