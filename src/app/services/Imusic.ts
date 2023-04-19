@@ -48,3 +48,4 @@ export interface IArtist {
     tracklist:      string;
     type:           string;
 }
+

@@ -1,0 +1,12 @@
+.results-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit,260px);
+    column-gap: 5rem;
+    row-gap: 2rem;
+    align-items: center;
+    justify-items: center;
+    align-content: center;
+    justify-content: center;
+    background-color: white;
+    margin-top: 30px;
+}
