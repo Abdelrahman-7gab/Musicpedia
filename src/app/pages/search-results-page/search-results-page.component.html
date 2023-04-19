@@ -1,0 +1,4 @@
+<app-navbar></app-navbar>
+<div class="results-container">
+    <app-card *ngFor="let result of (searchResults |async)?.data" (audioIsPlaying)="changePlayingSound($event)" [result] = result [playingAudio] = "playingAudio"></app-card>
+</div>

@@ -1,11 +1,12 @@
 .page{    display: grid;
     place-items: center;
     min-height: 55vh;
-    margin-top:8vh;
+    margin-top:2vh;
 }
 
 #home-logo{
-    height: 19rem;
+    height: 25rem;
+    max-width: 100%;
 }
 
 .background-waves{

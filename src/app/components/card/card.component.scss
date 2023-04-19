@@ -1,0 +1,45 @@
+.card-container {
+  box-shadow: -12px 16px 35px 0px rgba(0, 0, 0, 0.6);
+  -webkit-box-shadow: -12px 16px 35px 0px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: -12px 16px 35px 0px rgba(0, 0, 0, 0.6);
+  width: 260px;
+  display: grid;
+  justify-items: center;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+  row-gap: 5px;
+
+  svg {
+    width: 100%;
+  }
+
+  .card-image {
+    width: 100%;
+    border-radius: 50%;
+    filter: drop-shadow(-3px 2px 10px #222);
+  }
+
+  .album {
+    width: 100%;
+    display: grid;
+    place-items: center;
+  }
+
+  .card-details {
+    display: grid;
+    justify-items: center;
+    row-gap: 5px;
+    font-size: 1.7rem;
+    padding-top: 15px;
+  }
+
+  .by {
+    font-size: 1.1rem;
+    margin-left: -10px;
+  }
+
+  .card-artist {
+    font-size: 1.5rem;
+  }
+}

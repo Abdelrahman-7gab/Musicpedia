@@ -20,8 +20,12 @@
     "@angular/platform-browser-dynamic": "~13.2.0",
     "@angular/router": "~13.2.0",
     "@ngrx/store": "^13.0.2",
+    "@pikselin/ngx-fittext": "^2.0.0",
+    "angular-wavesurfer-service": "^2.1.1",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
+    "uuid": "^8.3.2",
+    "wavesurfer.js": "^6.2.0",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
@@ -30,6 +34,8 @@
     "@angular/compiler-cli": "~13.2.0",
     "@types/jasmine": "~3.10.0",
     "@types/node": "^12.11.1",
+    "@types/uuid": "^8.3.4",
+    "@types/wavesurfer.js": "^6.0.3",
     "jasmine-core": "~4.0.0",
     "karma": "~6.3.0",
     "karma-chrome-launcher": "~3.1.0",
