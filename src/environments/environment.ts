@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   serverUrl:"http://localhost:3000",
-  lyricsURL:"https://api.lyrics.ovh/v1"
+  lyricsURL:"http://localhost:3000/lyrics"
 };
 
 /*
