@@ -11,17 +11,15 @@ export class SearchService {
 
   private searchResults:BehaviorSubject<any> = new BehaviorSubject<any>({});
   serverUrl:string = "http://localhost:3000";
+  public searchBarValue:string = "";
+  public searchBarType:BehaviorSubject<string> =new BehaviorSubject<string>("track");
 
   constructor(private router:Router, private http:HttpClient) { }
 
   startSearch(word:string,searchType:string):void{
     let query = word.trim();
     if(query != ""){
-      let currentPage = this.router.url.substring(1,7);
-      if(currentPage != "search")
       this.router.navigateByUrl(`search?t=${searchType}&q=${query}`);
-      else
-      this.getSearchResults(searchType,query);
     }
   }
 

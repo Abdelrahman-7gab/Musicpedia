@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CardComponent } from './components/card/card.component';
 import { RecordingPlayerComponent } from './components/recording-player/recording-player.component';
 import { NgxFitTextModule } from '@pikselin/ngx-fittext';
+import { AlbumComponent } from './pages/album/album.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { NgxFitTextModule } from '@pikselin/ngx-fittext';
     SearchResultsPageComponent,
     CardComponent,
     RecordingPlayerComponent,
+    AlbumComponent,
   ],
   imports: [HttpClientModule,BrowserModule, AppRoutingModule, BrowserAnimationsModule,FormsModule,NgxFitTextModule],
   providers: [],

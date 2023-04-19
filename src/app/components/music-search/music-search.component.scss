@@ -1,6 +1,6 @@
 .search-window {
   align-items: center;
-  column-gap: 10px;
+  display: flex;
 }
 
 .search-input-container {
@@ -34,7 +34,7 @@
     font-size: 1.3rem;
     color: #556080;
     font-weight: 600;
-    min-width: 15rem;
+    min-width: 10rem;
     max-width: 38rem;
   }
 
@@ -47,29 +47,15 @@
   }
 }
 
-.query-container {
-  margin-top: 0.3rem;
-  font-weight: 600;
-  font-size: 25px;
-
-  ul {
-    display: flex;
-    justify-content: space-around;
-
-    li {
-      list-style: none;
-      cursor: pointer;
-      color: #5a6482;
-    }
-
-    li:hover {
-      color: #738EC3
-    }
-
-    .selectedChoice{
-        color:#738EC3;
-        text-decoration: underline;
-    }
-
+.query-container{
+margin-right: 5px;
+  select{
+    font-size: 25px;
+    border-radius: 9px;
+    border: 3.5px solid #556080;
+    color: white;
+    height: 40px;
+    background-color: #57ABC1;
+    cursor: pointer;
   }
 }
