@@ -1,0 +1,20 @@
+.search-icon{
+    height: 4rem;
+}
+
+.input-container{
+    width:60vw;
+    display: grid;
+    align-items: center;
+    grid-template-columns: 4rem 1fr;
+    column-gap: 10px;
+}
+
+.large-input{
+    width:50vw;
+    height: 2.5rem;
+    border-radius: 10px;
+    border: 3.5px solid #556080;
+    font-size: 16px;
+    color:#57ABC1;
+}
