@@ -1,1 +1,46 @@
-<p>album works!</p>
+<div class="albumPageContainer">
+  <app-card
+    *ngIf="(album$ | async)?.id != -1"
+    [result]="(album$ | async)!"
+  ></app-card>
+
+  <div class="tracklistContainer">
+    <div class="album-track" *ngFor="let track of (album$ | async)?.tracks">
+
+      <fit-text
+      height="25px"
+      width="80%"
+      class="album-title"
+      style="justify-content: center; align-items: center"
+      [calcOnResize]="true"
+    >
+
+      <a
+        [routerLink]="['/track']"
+        [queryParams]="{ id: track.id, type: 'track' }"
+        class="track-name"
+      >
+
+          {{ track.trackTitle }}
+
+      </a>
+      </fit-text> 
+
+      <div class="music-player" style="z-index: -1">
+        <app-recording-player
+          [audioLink]="track.preview"
+        ></app-recording-player>
+      </div>
+    </div>
+  </div>
+
+  <div class="deezer">
+    Release Date: {{ (album$ | async)?.release_date }}<br />
+    <span class="listen">
+      view the album on Deezer:
+      <a [href]="(album$ | async)?.link">
+        <img class="deezer-logo" src="assets/deezer-logo.png" alt="deezer" />
+      </a>
+    </span>
+  </div>
+</div>

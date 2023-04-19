@@ -15,13 +15,13 @@ import { CardComponent } from './components/card/card.component';
 import { RecordingPlayerComponent } from './components/recording-player/recording-player.component';
 import { NgxFitTextModule } from '@pikselin/ngx-fittext';
 import { AlbumComponent } from './pages/album/album.component';
-import { ArtistComponent } from './pages/artist/artist.component';
 import { TrackComponent } from './pages/track/track.component';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
 import { reducers,effects } from './state/app.state';
 import { EffectsModule } from '@ngrx/effects';
+import { ArtistComponent } from './pages/artist/artist.component';
 
 @NgModule({
   declarations: [
@@ -34,8 +34,8 @@ import { EffectsModule } from '@ngrx/effects';
     CardComponent,
     RecordingPlayerComponent,
     AlbumComponent,
-    ArtistComponent,
     TrackComponent,
+    ArtistComponent,
   ],
   imports: [
     HttpClientModule,

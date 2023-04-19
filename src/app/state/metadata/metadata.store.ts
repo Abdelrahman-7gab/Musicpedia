@@ -6,26 +6,24 @@ import { ICard, ITrack } from 'src/app/services/Imusic';
 
 export interface trackState {
   lyrics: string;
-  track: ICard;
+  item: ICard | null;
   status: string;
-  error:any;
-  album?:ICard;
-  artist?:ICard
+  error: any;
 }
 
-const initialState:trackState = {
+const initialState: trackState = {
   lyrics: '',
-  track: {id:-1,type:"null"},
+  item: { id: -1, type: 'null' },
   status: 'idle',
   error: null,
-}
+};
 
 const metadataSlice = createSlice({
   name: 'metadata',
   initialState,
   reducers: {
     getLyrics: (state, _action) => {
-    state.lyrics="Trying to get Lyrics ...";
+      state.lyrics = 'Trying to get Lyrics ...';
       state.status = 'loadingLyrics';
     },
     changeLyrics: (state, action) => {
@@ -34,32 +32,63 @@ const metadataSlice = createSlice({
     },
     getLyricsFail: (state, action) => {
       state.status = 'failedLyrics';
-      state.lyrics = "Can't find lyrics.";  
+      state.lyrics = "Can't find lyrics.";
       state.error = action.payload.error;
     },
     getItem: (state, action) => {
       state.status = 'loadingItem';
+      state.item = null;
     },
     changeItemMetadata: (state, action) => {
-      state.track = action.payload.track;
-      state.album = action.payload.album;
-      state.artist = action.payload.artist;
+      state.item = action.payload.item;
+      state.status = 'loadedItem';
     },
     getItemFail: (state, action) => {
       state.status = 'fail';
       state.error = action.payload.error;
-    }
+    },
+    getAlbums: (state, action) => {
+      state.status = 'loadingAlbums';
+    },
+    changeAlbums: (state, action) => {
+      state.status = 'loadedAlbums';
+      state.item!.albums = action.payload.albums;
+    },
+    getAlbumsFail: (state, action) => {
+      state.status = 'failedAlbums';
+      state.error = action.payload.error;
+    },
   },
 });
 
 //exports
 const {
   reducer,
-  actions: { getLyrics, changeLyrics, getLyricsFail,changeItemMetadata,getItem,getItemFail },
+  actions: {
+    getLyrics,
+    changeLyrics,
+    getLyricsFail,
+    changeItemMetadata,
+    getItem,
+    getItemFail,
+    getAlbums,
+    getAlbumsFail,
+    changeAlbums,
+  },
 } = metadataSlice;
 
 export default reducer;
-export { getLyrics, changeLyrics, getLyricsFail,changeItemMetadata,getItem,getItemFail };
+export {
+  getLyrics,
+  changeLyrics,
+  getLyricsFail,
+  changeItemMetadata,
+  getItem,
+  getItemFail,
+  getAlbums,
+  getAlbumsFail,
+  changeAlbums,
+};
 
 //Selectors
 const featureSelector = createFeatureSelector<
@@ -71,19 +100,9 @@ export const selectLyrics = createSelector(
   (state: ReturnType<typeof metadataSlice.reducer>) => state.lyrics
 );
 
-export const selectSong = createSelector(
+export const selectItem = createSelector(
   featureSelector,
-  (state: ReturnType<typeof metadataSlice.reducer>) => state.track
-);
-
-export const selectAlbum = createSelector(
-  featureSelector,
-  (state: ReturnType<typeof metadataSlice.reducer>) => state.album
-);
-
-export const selectArtist = createSelector(
-  featureSelector,
-  (state: ReturnType<typeof metadataSlice.reducer>) => state.artist
+  (state: ReturnType<typeof metadataSlice.reducer>) => state.item
 );
 
 export const selectStatus = createSelector(
