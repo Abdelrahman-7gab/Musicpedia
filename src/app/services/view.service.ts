@@ -15,14 +15,15 @@ export class ViewService {
   song$ = this.store.select(selectSong);
 
   constructor(private route: ActivatedRoute, private store: Store<any>) {
+    //check for id changes in the URL link to call the get song api
     this.route.queryParams.subscribe(async (params) => {
       let id = params['id'];
       if (id != null && this.currentID != id) {
-        console.log('id', id, 'currentID', this.currentID);
         this.store.dispatch(getItem({ itemType: 'track', id: id }));
       }
     });
 
+    //get current song and get lurics for it.
     this.song$.subscribe((song) => {
       if (song != null) {
         this.currentID = song.id;
