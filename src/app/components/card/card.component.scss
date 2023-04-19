@@ -73,3 +73,11 @@ cursor: auto;
 .card-container.active{
     transform: scale(1.1);
 }
+
+
+@media screen and (max-width: 760px){
+.card-container .card-image{
+        height: 160px;
+        width: 160px;
+    }
+}
