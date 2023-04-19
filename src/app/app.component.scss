@@ -1,5 +1,19 @@
-:host{
-    display: grid;
-    min-height: 100vh;
-    grid-template-rows: auto 1fr auto;
+:host {
+  display: grid;
+  min-height: 100vh;
+  grid-template-rows: 1fr auto;
+  row-gap: 2rem;
+}
+
+.full-content {
+  margin: 0 auto;
+  width: 85%;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+@media screen and (max-width: 870px) {
+  .full-content {
+    width: 100%;
+  }
 }
