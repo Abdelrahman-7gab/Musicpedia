@@ -4,9 +4,8 @@ import { createEffect, Actions, ofType } from '@ngrx/effects';
 import { map, catchError,of } from 'rxjs';
 import { ICard, TrackAPI } from 'src/app/services/Imusic';
 import { environment } from 'src/environments/environment';
-import { getSearchResults } from './searchResults.actions';
+import { getSearchResults,failedSearch,changeSearchResults } from './searchResults.store';
 import { switchMap } from 'rxjs';
-import {sucessfulSearch,failedSearch} from './searchResults.actions';
 import { mapToICard } from 'src/app/services/Imusic';
 
 @Injectable()
@@ -17,10 +16,10 @@ export class searchEffects {
     () =>
       this.actions$.pipe(
         ofType(getSearchResults),
-        switchMap(({ query, queryType }) =>
+        switchMap(({ payload }) =>
             this.http.get<TrackAPI>(
-                `${environment.serverUrl}/search/${queryType}/${query}`
-            ).pipe(map((results) => sucessfulSearch({results:{...results, data : results.data.map(mapToICard)}})),
+                `${environment.serverUrl}/search/${payload.queryType}/${payload.query}`
+            ).pipe(map((results) => changeSearchResults({results:{...results, data : results.data.map(mapToICard)}})),
             
             catchError((error) => of(failedSearch({error:error})))),
         

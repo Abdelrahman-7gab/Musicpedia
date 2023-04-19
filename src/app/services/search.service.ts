@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router  } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { getSearchResults } from '../state/searchResults/searchResults.actions';
+import { getSearchResults } from '../state/searchResults/searchResults.store';
 
 @Injectable({
   providedIn: 'root'
