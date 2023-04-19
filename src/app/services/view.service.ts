@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
 export class ViewService {
   currentID: number = -1;
   currentType: string = '';
-  currentStatus:string = '';
+  currentStatus: string = '';
 
   item$ = this.store.select(selectItem);
   status$ = this.store.select(selectStatus);
@@ -40,8 +40,7 @@ export class ViewService {
 
     this.status$.subscribe((status) => {
       this.currentStatus = status;
-    }
-    );
+    });
 
     this.item$.subscribe((item) => {
       if (item != null) {
@@ -66,7 +65,11 @@ export class ViewService {
         }
 
         //if the item is an artist get his albums list
-        if (item.type == 'artist' && this.currentStatus != "loadedAlbums") {
+        if (
+          item.type == 'artist' &&
+          this.currentStatus != 'loadedAlbums' &&
+          this.currentStatus != 'loadingAlbums'
+        ) {
           this.store.dispatch(getAlbums({ artistID: item.id }));
         }
       }
