@@ -26,7 +26,7 @@ export class ViewService {
     this.song$.subscribe((song) => {
       if (song != null) {
         this.currentID = song.id;
-        if (song != null)
+        if (song.artistName != null && song.trackTitle != null) 
           this.store.dispatch(
             getLyrics({ artist: song.artistName, title: song.trackTitle })
           );

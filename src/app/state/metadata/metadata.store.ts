@@ -30,10 +30,11 @@ const metadataSlice = createSlice({
     },
     changeLyrics: (state, action) => {
       state.lyrics = action.payload.lyrics;
+      state.status = 'loadedLyrics';
     },
     getLyricsFail: (state, action) => {
-      state.status = 'fail';
-      state.lyrics = '';
+      state.status = 'failedLyrics';
+      state.lyrics = "Can't find lyrics.";  
       state.error = action.payload.error;
     },
     getItem: (state, action) => {
