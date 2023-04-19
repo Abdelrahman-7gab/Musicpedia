@@ -1,0 +1,55 @@
+.page{    display: grid;
+    place-items: center;
+    min-height: 55vh;
+    margin-top:8vh;
+}
+
+#home-logo{
+    height: 19rem;
+}
+
+.background-waves{
+    position: absolute;
+    z-index: -1000;
+}
+
+.custom-shape-divider-bottom-1645189476 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.custom-shape-divider-bottom-1645189476 svg {
+    position: relative;
+    display: block;
+    width: calc(179% + 1.3px);
+    height: 6.25rem;
+    z-index: -1000;
+}
+
+.custom-shape-divider-bottom-1645189476 .shape-fill {
+    fill: #57ABC1;
+}
+
+.custom-shape-divider-top-1645189997 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.custom-shape-divider-top-1645189997 svg {
+    position: relative;
+    display: block;
+    width: calc(125% + 1.3px);
+    height: 5.3rem;
+}
+
+.custom-shape-divider-top-1645189997 .shape-fill {
+    fill: #57ABC1;
+}
