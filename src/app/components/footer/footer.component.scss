@@ -1,5 +1,5 @@
 footer{
-    height: 5rem;
+    height: 3rem;
     background-color: #57ABC1;
     color: white;
     display: grid;
@@ -8,6 +8,8 @@ footer{
     grid-template-columns: auto auto ;
     align-items: center;
     margin-top: 2rem;
+    justify-content: center;
+    column-gap: 5rem;
 
     .social{
         width: 35px;
@@ -51,15 +53,13 @@ footer{
     -moz-box-shadow: -12px 16px 35px 0px rgba(0, 0, 0, 0.6);
 }
 
-@media screen and (max-width: 768px){
+@media screen and (max-width: 1125px){
     footer{
         grid-template-columns: auto;
         height: auto;
         justify-content: center;
-
-        .shahd{
-            grid-row: 2/4;
-        }
+        padding-top: 1rem;
+        padding-bottom: 0;
     }
 }
 
@@ -70,10 +70,6 @@ footer{
 
     .shahd .author{
         margin-top: -12px;
-    }
-
-    .shahd{
-        margin: 10px 0;
     }
 
     .author{
