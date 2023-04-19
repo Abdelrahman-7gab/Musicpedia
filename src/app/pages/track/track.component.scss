@@ -64,6 +64,7 @@
     .trackPageContainer{
         grid-template-columns: auto;
         height: auto;
+        border: none;
     }
 
     app-card{
@@ -82,12 +83,18 @@
         grid-column: 1/2;
         grid-row: 3/3;
         height: 50vh;
-        border-top: 5px solid #556080;
-        margin-top: 30px;
+        border: 5px solid #556080;
+        width: 80%;
+        margin: 15px auto 0 auto;
+        font-size: 1.3rem;
     }
 
     :host ::ng-deep .card-container{
-        border-bottom: 0;
+        border-bottom: 5px solid #556080;
+        border-top: 5px solid #556080;
+        border-right: 5px solid #556080;
+        border-left: 5px solid #556080;
+        margin-bottom: 10px;
     }
     
 }
