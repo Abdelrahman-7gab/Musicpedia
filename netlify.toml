@@ -1,5 +1,5 @@
 [build]
-  publish = "dist/angular-netlify-functions-starter"
+  publish = "dist/microphone"
   command = "ng build --prod"
   edge_functions = "netlify_edge_functions/"
 
