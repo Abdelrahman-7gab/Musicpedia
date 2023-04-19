@@ -9,6 +9,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { FormsModule } from '@angular/forms';
+import { SearchResultsPageComponent } from './components/search-results-page/search-results-page.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -17,8 +19,9 @@ import { FormsModule } from '@angular/forms';
     NavbarComponent,
     HomePageComponent,
     FooterComponent,
+    SearchResultsPageComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule,FormsModule],
+  imports: [HttpClientModule,BrowserModule, AppRoutingModule, BrowserAnimationsModule,FormsModule],
   providers: [],
   bootstrap: [AppComponent],
 })
