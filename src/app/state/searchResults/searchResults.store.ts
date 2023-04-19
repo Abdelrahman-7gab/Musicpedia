@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { createFeatureSelector, createSelector, Store } from '@ngrx/store';
 
 const searchSlice = createSlice({
   name: 'searchResults',
@@ -11,7 +11,10 @@ const searchSlice = createSlice({
   },
   reducers: {
     getSearchResults:(state,_action) =>{
-        state.status = "loading"
+        state.status = "loading";
+        state.data = [];
+        state.total = -1;
+        state.next = '';
     },
     changeSearchResults: (state, action) => {
       state.data = action.payload.results.data;
