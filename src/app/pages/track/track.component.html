@@ -1,3 +1,16 @@
-<img [src]="(song$|async)?.image500" alt="" srcset="">
-<div class="lyricsContainer" [innerText] = "(lyricsStatus$|async) == 'loadingLyrics'?'Trying to get Lyrics ...':(lyrics$|async)">
+<div class="trackPageContainer">
+  <app-card *ngIf="card.preview != null" [result]="card"></app-card>
+  <div class="lyrics-section">
+    <div class="lyricsContainer" [innerText]="lyrics$ | async"></div>
+  </div>
+
+  <div class="deezer">
+    Release Date: {{ card.release_date }}<br />
+    <span class="listen">
+      Listen to the song on Deezer:
+      <a [href]="card.link">
+        <img class="deezer-logo" src="assets/deezer-logo.png" alt="deezer" />
+      </a>
+    </span>
+  </div>
 </div>

@@ -1,12 +1,15 @@
 #navbar{
+    height: 6.5rem;
     background: linear-gradient(to left, #57ABC1, transparent);;
     .logo{
         max-height: 6rem;
         max-width: 100%;
+        cursor:pointer;
     }
     display: flex;
     align-items: center;
     justify-content: space-between;
+    
 }
 
 :host ::ng-deep .search-window{
@@ -21,6 +24,7 @@
 @media screen and (max-width: 768px){
     #navbar{
        flex-direction: column;
+       height: auto;
     }
 
     :host ::ng-deep .search-window{

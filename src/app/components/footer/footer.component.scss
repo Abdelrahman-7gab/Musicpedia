@@ -1,0 +1,84 @@
+footer{
+    height: 5rem;
+    background-color: #57ABC1;
+    color: white;
+    display: grid;
+    font-size: 1.5rem;
+    padding: 1.5rem 2rem;
+    grid-template-columns: auto auto ;
+    align-items: center;
+    margin-top: 2rem;
+
+    .social{
+        width: 35px;
+    }
+
+    .social:hover{
+        transform: scale(1.1);
+    }
+
+    img{
+        margin: 0 4px;
+    }
+
+    .author{
+        margin-left: 8px;
+        display: flex;
+        align-items: center;
+        font-size: 1.8rem;
+        color: #556080;
+    }
+
+    .heart{
+        width:30px;
+        height: 30px;
+    }
+
+    .logo-head{
+        width: 55px;
+        margin-bottom: 12px;
+    }
+
+    .shahd ,.abdel,.madeBy{
+        display: flex;
+        align-items: center;
+    }
+}
+
+.shadow{
+    box-shadow: -12px 16px 35px 0px rgba(0, 0, 0, 0.6);
+    -webkit-box-shadow: -12px 16px 35px 0px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: -12px 16px 35px 0px rgba(0, 0, 0, 0.6);
+}
+
+@media screen and (max-width: 768px){
+    footer{
+        grid-template-columns: auto;
+        height: auto;
+        justify-content: center;
+
+        .shahd{
+            grid-row: 2/4;
+        }
+    }
+}
+
+@media screen and (max-width: 495px){
+    .abdel,.shahd{
+        flex-direction: column;
+    }
+
+    .shahd .author{
+        margin-top: -12px;
+    }
+
+    .shahd{
+        margin: 10px 0;
+    }
+
+    .author{
+        font-size: 1.7rem;
+        margin-left:0;
+    }
+}
+    
