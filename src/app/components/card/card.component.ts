@@ -8,7 +8,6 @@ import {  Store } from '@ngrx/store';
 import { ICard } from 'src/app/services/Imusic';
 import { UUIDSelector } from 'src/app/state/playingAudio/playingAudio.store';
 import { Router } from '@angular/router';
-import { changeSong,getLyrics } from 'src/app/state/trackPage/trackpage.store';
 
 @Component({
   selector: 'app-card',
@@ -48,8 +47,6 @@ export class CardComponent implements OnInit {
   cardClick():void{
     if(this.cardType=="track"){
     this.router.navigateByUrl(`/track?id=${this.result.id}`);
-    this.store.dispatch(changeSong({song:this.result}));
-    this.store.dispatch(getLyrics({artist:this.result.artistName,title:this.result.trackTitle}));
     }
   }
 }
