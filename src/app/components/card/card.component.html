@@ -1,45 +1,98 @@
-<div class="card-container" [ngClass]="{'track-container':cardType=='track','active':active}">
-  <div class="album" *ngIf="cardType != 'artist'">
-    <div class="subheader" *ngIf="cardType == 'track'">Album</div>
+<div
+  class="card-container"
+  [ngClass]="{
+    'track-container': result != null && result.type == 'track',
+    active: active
+  }"
+>
+  <div class="album" *ngIf="result != null && result.type != 'artist'">
+    <div class="subheader" *ngIf="result != null && result.type == 'track'">
+      Album
+    </div>
     <fit-text
       height="25px"
       width="80%"
       class="album-title"
       style="justify-content: center; align-items: center"
       [calcOnResize]="true"
-      >{{result.albumTitle}}</fit-text
     >
+      <a
+        [routerLink]="['/album']"
+        [queryParams]="{ id: result!.albumID, type: 'album' }"
+      >
+        {{ result!.albumTitle }}</a
+      >
+    </fit-text>
   </div>
 
-
-  <a [routerLink]="['/track']" [queryParams]="{id:result.id}" class="image-container">
+  <a
+    *ngIf="result != null"
+    [routerLink]="['/' + result!.type]"
+    [queryParams]="{ id: result!.id, type: result!.type }"
+    class="image-container"
+  >
     <img
       class="card-image"
-      [ngClass]="{ 'track-card': cardType == 'track'}"
-      [src]="cardType!='artist'?result.image264 : result.picture_medium"
+      [ngClass]="{ 'track-card': result!.type == 'track' }"
+      [src]="
+        result!.type != 'artist'
+          ? result!.type == 'album'
+            ? result!.image500
+            : result!.image264
+          : result!.picture_medium
+      "
     />
   </a>
 
-  <a class="song-title" [routerLink]="['/track']" [queryParams]="{id:result.id}">
+  <a
+    *ngIf="result != null && result.type != 'album'"
+    class="song-title"
+    [routerLink]="result!.type != 'album' ? ['/' + result!.type] : []"
+    [queryParams]="{ id: result!.id, type: result!.type }"
+  >
     <fit-text
       height="30px"
       width="100%"
       style="justify-content: center; align-items: center"
       [calcOnResize]="true"
-      >{{ cardType =='artist'?result.artistName:(cardType == "track" ? result.title_short : (result.nb_tracks!= null && result.nb_tracks > 1?result.nb_tracks + " Songs":"Single")) }}
-      </fit-text
-      >
-      <span class="explicit" *ngIf="cardType=='track' && result.explicit_lyrics">E</span>
+      >{{ result!.type == "artist" ? result!.artistName : result!.title_short }}
+    </fit-text>
+    <span
+      class="explicit"
+      *ngIf="result!.type == 'track' && result!.explicit_lyrics"
+      >E</span
+    >
   </a>
 
+  <fit-text
+    class="card-info"
+    *ngIf="result != null && result.type == 'album'"
+    height="30px"
+    width="100%"
+    style="justify-content: center; align-items: center; cursor: auto"
+    [calcOnResize]="true"
+  >
+    {{
+      result!.nb_tracks != null && result!.nb_tracks > 1
+        ? result!.nb_tracks + " Songs"
+        : "Single"
+    }}
+  </fit-text>
+
   <app-recording-player
-    *ngIf="cardType == 'track'"
+    *ngIf="result != null && result.type == 'track'"
     (pauseAudio)="setActive(false)"
     (uuidEmitter)="setUuid($event)"
-    [audioLink]="result.preview"
+    [audioLink]="result!.preview"
   ></app-recording-player>
 
-  <div class="card-artist" *ngIf="cardType !='artist'">
-    <span class="by">by</span> <span class="artist-title">{{ result.artistName }}</span>
+  <div class="card-artist" *ngIf="result != null && result.type != 'artist'">
+    <span class="by">by</span>
+    <a
+      [routerLink]="['/artist']"
+      [queryParams]="{ id: result!.artistID, type: 'artist' }"
+      class="artist-title"
+      >{{ result!.artistName }}</a
+    >
   </div>
 </div>

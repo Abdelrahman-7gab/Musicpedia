@@ -50,10 +50,13 @@ export interface IArtist {
   type: string;
 }
 
-export interface ILyrics{
+export interface ILyrics {
   lyrics: string;
 }
 
+interface albumTracks {
+  data: ITrack[];
+}
 export interface ICard {
   type: string;
   id: number;
@@ -74,10 +77,14 @@ export interface ICard {
   artistID?: number;
   nb_tracks?: number;
   release_date?: string;
+  tracks?: ICard[];
+  nb_album?: number;
+  albums?: ICard[];
 }
 
 // map object to ICard
-export function mapToICard(object: any): ICard {
+export function mapToICard(object: any): ICard |any {
+  try{
   let card: ICard = {
     type: object.type,
     id: object.id,
@@ -88,28 +95,47 @@ export function mapToICard(object: any): ICard {
     card.artistName = object.artist.name;
     card.albumID = object.album.id;
     card.artistID = object.artist.id;
-}
+  }
   if (object.title != null && object.type == 'album') {
     card.albumTitle = object.title;
+    if(object.artist != null) {
     card.artistName = object.artist.name;
     card.artistID = object.artist.id;
-}
+    }
+    card.albumID = object.id;
+    card.nb_tracks = object.nb_tracks;
+  }
+  if(object.type == 'artist'){
+    card.nb_album = object.nb_album;
+  }
+
   if (object.title_short != null) card.title_short = object.title_short;
   if (object.picture_medium != null)
     card.picture_medium = object.picture_medium;
   if (object.tracklist != null) card.tracklist = object.tracklist;
   if (object.artist != null) card.artist = object.artist;
   if (object.album != null) card.album = object.album;
-  if (object.md5_image != null){ 
-    card.image264 = "https://cdns-images.dzcdn.net/images/cover/" + object.md5_image +"/264x264.jpg";
-    card.image500 = "https://cdns-images.dzcdn.net/images/cover/" + object.md5_image +"/500x500.jpg";}
+  if (object.md5_image != null) {
+    card.image264 =
+      'https://cdns-images.dzcdn.net/images/cover/' +
+      object.md5_image +
+      '/264x264.jpg';
+    card.image500 =
+      'https://cdns-images.dzcdn.net/images/cover/' +
+      object.md5_image +
+      '/500x500.jpg';
+  }
   if (object.explicit_lyrics != null)
     card.explicit_lyrics = object.explicit_lyrics;
   if (object.preview != null) card.preview = object.preview;
   if (object.link != null) card.link = object.link;
   if (object.name != null) card.artistName = object.name;
-  if (object.nb_tracks != null) card.nb_tracks = object.nb_tracks;
   if (object.release_date != null) card.release_date = object.release_date;
+  if(object.tracks != null) card.tracks = object.tracks.data.map(mapToICard);
 
   return card;
+}
+catch(err){
+  console.log(err);
+}
 }

@@ -1,12 +1,12 @@
 <div class="trackPageContainer">
-  <app-card *ngIf="card.preview != null" [result]="card"></app-card>
-    <div class="lyricsContainer" [innerText]="lyrics$ | async"></div>
+  <app-card *ngIf="(status$|async) !='loadingItem' " [result]="(song$|async)"></app-card>
+    <div class="lyricsContainer" [innerText]="(lyrics$ | async)"></div>
 
   <div class="deezer">
-    Release Date: {{ card.release_date }}<br />
+    Release Date: {{ (song$|async)?.release_date }}<br />
     <span class="listen">
       Listen to the song on Deezer:
-      <a [href]="card.link">
+      <a [href]="(song$|async)?.link">
         <img class="deezer-logo" src="assets/deezer-logo.png" alt="deezer" />
       </a>
     </span>

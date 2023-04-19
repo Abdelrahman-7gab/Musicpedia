@@ -11,7 +11,7 @@ import { changePlayingSound,stopPlayingSound,UUIDSelector } from "src/app/state/
   templateUrl: "./recording-player.component.html",
   styleUrls: ["./recording-player.component.scss"],
 })
-export class RecordingPlayerComponent implements AfterViewInit {
+export class RecordingPlayerComponent implements AfterViewInit,OnChanges {
   @Input() audioLink: string | undefined = "";
   @Output() uuidEmitter: EventEmitter<string> = new EventEmitter();
   wave: any = null;
@@ -25,6 +25,13 @@ export class RecordingPlayerComponent implements AfterViewInit {
 
   constructor(private changeDetectorRef:ChangeDetectorRef,private store:Store<any>) {
     this.uuid = "n" + uuidv4();
+  }
+  ngOnChanges(changes: SimpleChanges): void
+  {
+    if(changes["audioLink"].currentValue != changes["audioLink"].previousValue && this.wave != null)
+    {
+      this.wave.load(this.audioLink);
+    }
   }
 
   ngAfterViewInit() {

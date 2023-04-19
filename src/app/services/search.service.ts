@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { getSearchResults } from '../state/searchResults/searchResults.store';
-import { selectSong } from '../state/metadata/metadata.store';
+import { selectItem } from '../state/metadata/metadata.store';
 import { ICard } from './Imusic';
 
 @Injectable({
@@ -15,7 +15,7 @@ export class SearchService {
     'track'
   );
 
-  private currentStoreSong: ICard = { id: -1, type: 'null' };
+  private currentStoreSong: ICard | null = null;
 
   private lastSearchType: string = '';
   private lastQuery: string = '';
@@ -35,7 +35,7 @@ export class SearchService {
 
       if (searchQuery != null) this.getSearchResults(searchType, searchQuery);
 
-      this.store.select(selectSong).subscribe((song) => {
+      this.store.select(selectItem).subscribe((song) => {
         this.currentStoreSong = song;
       });
     });
@@ -62,15 +62,15 @@ export class SearchService {
   //to avoid calling the api for the same song twice, we check if the song is the same as the one in the store.
   showLatestSearch(): void {
     if (this.lastQuery == '') {
-      let title = this.currentStoreSong.trackTitle;
+      let title = this.currentStoreSong!.trackTitle;
 
-      if (this.currentStoreSong.type == 'album')
-        title = this.currentStoreSong.albumTitle;
-      else if (this.currentStoreSong.type == 'artist')
-        title = this.currentStoreSong.artistName;
+      if (this.currentStoreSong!.type == 'album')
+        title = this.currentStoreSong!.albumTitle;
+      else if (this.currentStoreSong!.type == 'artist')
+        title = this.currentStoreSong!.artistName;
 
       this.router.navigateByUrl(
-        `search?t=${this.currentStoreSong.type}&q=${title}`
+        `search?t=${this.currentStoreSong!.type}&q=${title}`
       );
     } else
       this.router.navigateByUrl(
