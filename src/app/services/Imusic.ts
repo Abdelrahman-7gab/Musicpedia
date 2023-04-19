@@ -50,6 +50,10 @@ export interface IArtist {
   type: string;
 }
 
+export interface ILyrics{
+  lyrics: string;
+}
+
 export interface ICard {
   type: string;
   id: number;
@@ -60,12 +64,15 @@ export interface ICard {
   tracklist?: string;
   artist?: IArtist;
   album?: IAlbum;
+  albumID?: number;
   md5_image?: string;
   explicit_lyrics?: boolean;
   preview?: string;
   link?: string;
   artistName?: string;
+  artistID?: number;
   nb_tracks?: number;
+  release_date?: string;
 }
 
 // map object to ICard
@@ -78,10 +85,13 @@ export function mapToICard(object: any): ICard {
     card.trackTitle = object.title;
     card.albumTitle = object.album.title;
     card.artistName = object.artist.name;
+    card.albumID = object.album.id;
+    card.artistID = object.artist.id;
 }
   if (object.title != null && object.type == 'album') {
     card.albumTitle = object.title;
     card.artistName = object.artist.name;
+    card.artistID = object.artist.id;
 }
   if (object.title_short != null) card.title_short = object.title_short;
   if (object.picture_medium != null)
@@ -96,6 +106,7 @@ export function mapToICard(object: any): ICard {
   if (object.link != null) card.link = object.link;
   if (object.name != null) card.artistName = object.name;
   if (object.nb_tracks != null) card.nb_tracks = object.nb_tracks;
+  if (object.release_date != null) card.release_date = object.release_date;
 
   return card;
 }
