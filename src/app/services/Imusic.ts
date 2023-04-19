@@ -1,6 +1,7 @@
 export interface TrackAPI {
-    data:  ITrack[];
+    data:  ITrack[] | IAlbum[] | IArtist[];
     total: number;
+    next?:string;
 }
 
 export interface ITrack {
@@ -21,7 +22,6 @@ export interface ITrack {
     album:                   IAlbum;
     type:                    string;
 }
-
 export interface IAlbum {
     id:           number;
     title:        string;
