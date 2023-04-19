@@ -9,19 +9,16 @@
 
 }
 
-.lyrics-section{
-    grid-column: 2/3;
-    grid-row: 1/3;
-    border-left: 5px solid #556080;
-    background-color:rgba(107,181,200,0.9);
-}
-
 .subheader{
     padding-left: 15px;
     padding-top: 10px;
 }
 
 .lyricsContainer{
+    grid-column: 2/3;
+    grid-row: 1/3;
+    border-left: 5px solid #556080;
+    background-color:rgba(107,181,200,0.9);
     overflow-y: auto;
     font-size: 1.7rem;
     padding: 10px 15px 5px 15px;
@@ -33,6 +30,7 @@
     font-size: 1.5rem;
     margin-left: auto;
     margin-right: auto;
+    color: #556080;
 }
 
 .listen{
@@ -60,4 +58,36 @@
 
 :host ::ng-deep .card-container.active{
     transform: none !important;
+}
+
+@media screen and (max-width: 700px){
+    .trackPageContainer{
+        grid-template-columns: auto;
+        height: auto;
+    }
+
+    app-card{
+        display: grid;
+        place-items: center;
+    }
+
+    .deezer{
+        border: 5px solid #556080;
+        margin-right: auto;
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+    .lyricsContainer{
+        grid-column: 1/2;
+        grid-row: 3/3;
+        height: 50vh;
+        border-top: 5px solid #556080;
+        margin-top: 30px;
+    }
+
+    :host ::ng-deep .card-container{
+        border-bottom: 0;
+    }
+    
 }
