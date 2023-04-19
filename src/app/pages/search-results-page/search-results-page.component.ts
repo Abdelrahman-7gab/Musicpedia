@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { ICard } from 'src/app/services/Imusic';
 import { SearchService } from 'src/app/services/search.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { SearchService } from 'src/app/services/search.service';
 })
 export class SearchResultsPageComponent implements OnInit {
   playingAudio:string = "";
-  searchResults:BehaviorSubject<any> = new BehaviorSubject<any>({});
+  searchResults:BehaviorSubject<ICard[]> = new BehaviorSubject<ICard[]>([]);
 
   constructor(private searchService:SearchService) { }
 

@@ -3,34 +3,31 @@ import WaveSurfer from "wavesurfer.js";
 import { v4 as uuidv4 } from "uuid";
 import { Subject } from "rxjs";
 import { throttleTime } from "rxjs/operators";
+import { Store } from "@ngrx/store";
+import { playAudio } from "src/app/state/playingAudio/playingAudio.actions";
+import { stopAudio } from "src/app/state/playingAudio/playingAudio.actions";
+import { selectUUID } from "src/app/state/playingAudio/playingAudio.selectors";
+import { AppState } from "src/app/state/app.state";
 
 @Component({
   selector: "app-recording-player",
   templateUrl: "./recording-player.component.html",
   styleUrls: ["./recording-player.component.scss"],
 })
-export class RecordingPlayerComponent implements AfterViewInit,OnChanges {
-  @Input() audioLink: string = "";
-  @Output() audioIsPlaying = new EventEmitter<string>();
-  @Input() playingAudio:string = "";
-  @Output() pauseAudio = new EventEmitter<null>();
+export class RecordingPlayerComponent implements AfterViewInit {
+  @Input() audioLink: string | undefined = "";
+  @Output() uuidEmitter: EventEmitter<string> = new EventEmitter();
   wave: any = null;
   uuid: string;
   readyToPlay:boolean = false;
+  activeAudioUUid$ = this.store.select(selectUUID)
 
   isPlaying: boolean = false;
   audioLength = new Subject<string>();
   currentLength: string = "0:00";
 
-  constructor(private changeDetectorRef:ChangeDetectorRef) {
+  constructor(private changeDetectorRef:ChangeDetectorRef,private store:Store<AppState>) {
     this.uuid = "n" + uuidv4();
-  }
-  ngOnChanges(changes: SimpleChanges): void
-  {
-    if(changes["playingAudio"].currentValue !== changes["playingAudio"].previousValue)
-    {
-     this.pauseIfOtherIsPlaying(changes["playingAudio"].currentValue);
-    }
   }
 
   ngAfterViewInit() {
@@ -39,8 +36,13 @@ export class RecordingPlayerComponent implements AfterViewInit,OnChanges {
       this.changeDetectorRef.detectChanges();
     });
 
-    //  this.generateWaveform();
       this.generateWaveform();
+
+      this.activeAudioUUid$.subscribe((uuid) => {
+        this.pauseIfOtherIsPlaying(uuid);
+      });
+
+      this.uuidEmitter.emit(this.uuid);
   
   }
 
@@ -50,11 +52,11 @@ export class RecordingPlayerComponent implements AfterViewInit,OnChanges {
     this.isPlaying = !this.isPlaying;
 
     if(this.isPlaying)
-    this.audioIsPlaying.emit(this.uuid);
+    this.store.dispatch(playAudio({uuid:this.uuid}));
     }
 
     else{
-      this.pauseAudio.emit();
+     this.store.dispatch(stopAudio())
     }
   }
 
@@ -62,7 +64,6 @@ export class RecordingPlayerComponent implements AfterViewInit,OnChanges {
     if(this.uuid !== uuid && this.wave != null){
       this.wave.pause();
       this.isPlaying = false;
-      this.pauseAudio.emit();
     }
   }
 
@@ -104,7 +105,7 @@ export class RecordingPlayerComponent implements AfterViewInit,OnChanges {
 
     this.wave.on("finish", () => {
       this.isPlaying = false;
-      this.pauseAudio.emit()
+      this.store.dispatch(playAudio({uuid:this.uuid}))
       this.changeDetectorRef.detectChanges();
     });
   }

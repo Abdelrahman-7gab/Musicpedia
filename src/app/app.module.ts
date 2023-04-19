@@ -15,6 +15,12 @@ import { CardComponent } from './components/card/card.component';
 import { RecordingPlayerComponent } from './components/recording-player/recording-player.component';
 import { NgxFitTextModule } from '@pikselin/ngx-fittext';
 import { AlbumComponent } from './pages/album/album.component';
+import { ArtistComponent } from './pages/artist/artist.component';
+import { TrackComponent } from './pages/track/track.component';
+import { StoreModule } from '@ngrx/store';
+import { playAudioReducer } from './state/playingAudio/playingAudio.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -27,8 +33,19 @@ import { AlbumComponent } from './pages/album/album.component';
     CardComponent,
     RecordingPlayerComponent,
     AlbumComponent,
+    ArtistComponent,
+    TrackComponent,
   ],
-  imports: [HttpClientModule,BrowserModule, AppRoutingModule, BrowserAnimationsModule,FormsModule,NgxFitTextModule],
+  imports: [
+    HttpClientModule,
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    NgxFitTextModule,
+    StoreModule.forRoot({ playingAudio: playAudioReducer }),
+    StoreDevtoolsModule.instrument({ maxAge: 25,logOnly: environment.production }),
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
