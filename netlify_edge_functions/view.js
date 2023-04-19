@@ -1,6 +1,5 @@
 export default async (req, context) => {
     const url = new URL(req.url);
-    console.log(url)
     const type = url.searchParams.get('type');
     const id = url.searchParams.get('id');
 
