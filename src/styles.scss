@@ -1,6 +1,53 @@
 /* You can add global styles to this file, and also import other style files */
+*{
+    padding: 0;
+    margin: 0;
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+}
+
 body{
-    display: grid;
-    place-items: center;
-    min-height: 95vh;
+    background-color: #fef4cd;
+}
+
+#music-icon-animation{
+    position: absolute;
+    height: 3rem;
+    right: 0;
+    top:25vh;
+    animation: horizontal-linear linear 16s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+}
+
+@keyframes horizontal-linear {
+
+    12.5% {
+        transform: translateX(calc(-25vw + 3rem)) translateY(1rem) rotate(5deg);
+    }
+
+    25% {
+        transform: translateX(calc(-50vw + 3rem)) translateY(-1rem) rotate(-5deg);
+    }
+
+    37.5% {
+        transform: translateX(calc(-75vw + 3rem)) translateY(1rem) rotate(-10deg);
+
+    }
+
+    50% {
+        transform: translateX(calc(-100vw + 3rem)) translateY(-1rem) rotate(-15deg);
+        opacity: 1;
+    }
+
+    50.001% {
+        transform: translateX(0vw) translateY(0) rotate(0);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0vw) translateY(0) rotate(0);
+        opacity: 0;
+    }
+
+
 }

@@ -1,5 +1,46 @@
-<div class="input-container">
-    
-    <img class ="search-icon" src="../../../assets/search-icon-2.svg" alt="search">
-    <input class ="large-input" type="text">
+<div class="search-window">
+  <form (ngSubmit)="startSearch(searchInputForm.value)">
+    <div class="search-input-container">
+      <input
+        #searchInputForm
+        class="large-input"
+        type="text"
+        placeholder="search for {{ AorAn(searchParam) }} "
+      />
+
+      <button class="search-icon-button">
+        <img
+          class="search-icon"
+          src="../../../assets/search-icon-2.svg"
+          alt="search"
+        />
+      </button>
+    </div>
+  </form>
+
+  <div class="query-container">
+    <ul>
+      <li
+        [ngClass]="{ selectedChoice: searchParam === 'track' }"
+        class="queryChoice"
+        (click)="setSearchParam('track')"
+      >
+        Track
+      </li>
+      <li
+        [ngClass]="{ selectedChoice: searchParam === 'album' }"
+        class="queryChoice"
+        (click)="setSearchParam('album')"
+      >
+        Album
+      </li>
+      <li
+        [ngClass]="{ selectedChoice: searchParam === 'artist' }"
+        class="queryChoice"
+        (click)="setSearchParam('artist')"
+      >
+        Artist
+      </li>
+    </ul>
+  </div>
 </div>
