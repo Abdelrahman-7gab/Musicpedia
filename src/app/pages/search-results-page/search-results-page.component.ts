@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { selectResults } from 'src/app/state/searchResults/searchResults.store';
+import { SearchService } from 'src/app/services/search.service';
 
 @Component({
   selector: 'app-search-results-page',
