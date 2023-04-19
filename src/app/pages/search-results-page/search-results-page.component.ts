@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ICard } from 'src/app/services/Imusic';
 import { SearchService } from 'src/app/services/search.service';
+import { Store } from '@ngrx/store';
+import { selectResults } from 'src/app/state/searchResults/searchResults.selectors';
 
 @Component({
   selector: 'app-search-results-page',
@@ -10,12 +12,11 @@ import { SearchService } from 'src/app/services/search.service';
 })
 export class SearchResultsPageComponent implements OnInit {
   playingAudio:string = "";
-  searchResults:BehaviorSubject<ICard[]> = new BehaviorSubject<ICard[]>([]);
+  searchResults$ = this.store.select(selectResults);
 
-  constructor(private searchService:SearchService) { }
+  constructor(private store:Store<any>) { }
 
   ngOnInit(): void {
-    this.searchResults = this.searchService.getResults();
   }
 
   changePlayingSound(uuid:string){

@@ -1,20 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Router  } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, lastValueFrom } from 'rxjs';
-import { TrackAPI,ICard,mapToICard } from './Imusic';
+import { BehaviorSubject } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { getSearchResults } from '../state/searchResults/searchResults.actions';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SearchService {
-
-  private searchResults:BehaviorSubject<ICard[]> = new BehaviorSubject<ICard[]>([]);
   serverUrl:string = "http://localhost:3000";
   public searchBarValue:string = "";
   public searchBarType:BehaviorSubject<string> =new BehaviorSubject<string>("track");
 
-  constructor(private router:Router, private http:HttpClient) { }
+  constructor(private router:Router, private store:Store) { }
 
   startSearch(word:string,searchType:string):void{
     let query = word.trim();
@@ -24,12 +22,7 @@ export class SearchService {
   }
 
   async getSearchResults(searchType:string,query:string):Promise<void>{
-       const result:TrackAPI = await lastValueFrom(this.http.get<TrackAPI>(`${this.serverUrl}/search/${searchType}/${query}`));
-       this.searchResults.next(result.data.map(mapToICard));
-       console.log(result)
+      this.store.dispatch(getSearchResults({query:query,queryType:searchType}));
   }
 
-  public getResults():BehaviorSubject<ICard[]>{
-    return this.searchResults;
-  } 
 }
