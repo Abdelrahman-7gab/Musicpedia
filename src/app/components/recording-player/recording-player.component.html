@@ -1,4 +1,4 @@
-<div class="message-recording-container">
+<div class="message-recording-container" (click)="stopPropagation($event)">
     <div class="play-or-pause-record" (click)="playPause()">
       <i class="far" [ngClass] = "isPlaying?'fa-pause-circle':'fa-play-circle'" > </i>
     </div>

@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { ICard } from 'src/app/services/Imusic';
-import { SearchService } from 'src/app/services/search.service';
 import { Store } from '@ngrx/store';
-import { selectResults } from 'src/app/state/searchResults/searchResults.selectors';
+import { selectResults } from 'src/app/state/searchResults/searchResults.store';
 
 @Component({
   selector: 'app-search-results-page',

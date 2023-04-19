@@ -3,11 +3,8 @@ import WaveSurfer from "wavesurfer.js";
 import { v4 as uuidv4 } from "uuid";
 import { Subject } from "rxjs";
 import { throttleTime } from "rxjs/operators";
-import { Store } from "@ngrx/store";
-import { playAudio } from "src/app/state/playingAudio/playingAudio.actions";
-import { stopAudio } from "src/app/state/playingAudio/playingAudio.actions";
-import { selectUUID } from "src/app/state/playingAudio/playingAudio.selectors";
-import { AppState } from "src/app/state/app.state";
+import { createSelector, Store } from "@ngrx/store";
+import { changePlayingSound,stopPlayingSound,UUIDSelector } from "src/app/state/playingAudio/playingAudio.store";
 
 @Component({
   selector: "app-recording-player",
@@ -20,13 +17,13 @@ export class RecordingPlayerComponent implements AfterViewInit {
   wave: any = null;
   uuid: string;
   readyToPlay:boolean = false;
-  activeAudioUUid$ = this.store.select(selectUUID)
+  activeAudioUUid$ = this.store.select(UUIDSelector);
 
   isPlaying: boolean = false;
   audioLength = new Subject<string>();
   currentLength: string = "0:00";
 
-  constructor(private changeDetectorRef:ChangeDetectorRef,private store:Store<AppState>) {
+  constructor(private changeDetectorRef:ChangeDetectorRef,private store:Store<any>) {
     this.uuid = "n" + uuidv4();
   }
 
@@ -46,18 +43,25 @@ export class RecordingPlayerComponent implements AfterViewInit {
   
   }
 
-  playPause() {
+  stopPropagation(event: Event): void {
+    event.stopPropagation();
+  }
+
+  playPause(): void  {
     if(this.readyToPlay){
     this.wave.playPause();
     this.isPlaying = !this.isPlaying;
 
     if(this.isPlaying)
-    this.store.dispatch(playAudio({uuid:this.uuid}));
-    }
+    this.store.dispatch(changePlayingSound(this.uuid));
 
     else{
-     this.store.dispatch(stopAudio())
+      this.store.dispatch(stopPlayingSound({}))
+     }
+
     }
+
+
   }
 
   pauseIfOtherIsPlaying(uuid:string){
@@ -105,7 +109,7 @@ export class RecordingPlayerComponent implements AfterViewInit {
 
     this.wave.on("finish", () => {
       this.isPlaying = false;
-      this.store.dispatch(playAudio({uuid:this.uuid}))
+      this.store.dispatch(stopPlayingSound({}))
       this.changeDetectorRef.detectChanges();
     });
   }
