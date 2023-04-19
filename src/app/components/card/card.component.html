@@ -13,7 +13,7 @@
   <img
     class="card-image"
     [ngClass]="{ 'track-card': cardType == 'track'}"
-    [src]="cardType!='artist'?'https://cdns-images.dzcdn.net/images/cover/' + result.md5_image +'/264x264.jpg' : result.picture_medium"
+    [src]="cardType!='artist'?result.image264 : result.picture_medium"
   />
 
   <div class="song-title">

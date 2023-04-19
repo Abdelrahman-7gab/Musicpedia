@@ -9,10 +9,10 @@ import { ILyrics, ITrack } from 'src/app/services/Imusic';
 import { mapToICard } from 'src/app/services/Imusic';
 
 @Injectable()
-export class trackPageEffects {
+export class metadataEffects {
   // results$ = Observable</TrackAPI>
 
-  searchEffect = createEffect(
+  lyricsEffect = createEffect(
     () =>
       this.actions$.pipe(
         ofType(getLyrics),

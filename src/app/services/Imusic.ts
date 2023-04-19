@@ -65,7 +65,8 @@ export interface ICard {
   artist?: IArtist;
   album?: IAlbum;
   albumID?: number;
-  md5_image?: string;
+  image264?: string;
+  image500?: string;
   explicit_lyrics?: boolean;
   preview?: string;
   link?: string;
@@ -99,7 +100,9 @@ export function mapToICard(object: any): ICard {
   if (object.tracklist != null) card.tracklist = object.tracklist;
   if (object.artist != null) card.artist = object.artist;
   if (object.album != null) card.album = object.album;
-  if (object.md5_image != null) card.md5_image = object.md5_image;
+  if (object.md5_image != null){ 
+    card.image264 = "https://cdns-images.dzcdn.net/images/cover/" + object.md5_image +"/264x264.jpg";
+    card.image500 = "https://cdns-images.dzcdn.net/images/cover/" + object.md5_image +"/500x500.jpg";}
   if (object.explicit_lyrics != null)
     card.explicit_lyrics = object.explicit_lyrics;
   if (object.preview != null) card.preview = object.preview;
