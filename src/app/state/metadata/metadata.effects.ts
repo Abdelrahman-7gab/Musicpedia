@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
 import { map, catchError, of } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import {
   getLyrics,
   changeLyrics,
@@ -15,8 +14,10 @@ import {
   changeAlbums,
 } from './metadata.store';
 import { switchMap } from 'rxjs';
-import { IAlbum, ILyrics, ITrack } from 'src/app/services/Imusic';
+import { ILyrics } from 'src/app/services/Imusic';
 import { mapToICard } from 'src/app/services/Imusic';
+import { fetch } from '@tauri-apps/api/http';
+import { from } from 'rxjs';
 
 @Injectable()
 export class metadataEffects {
@@ -26,12 +27,14 @@ export class metadataEffects {
     this.actions$.pipe(
       ofType(getLyrics),
       switchMap(({ payload }) =>
-        this.http
-          .get<ILyrics>(
-            `${environment.lyricsURL}/${payload.artist}/${payload.title}`
+        from(
+          fetch(
+            `http://musicpedia.live/api/lyrics/${payload.artist}/${payload.title}`
           )
+        )
+          .pipe(map((response) => response.data))
           .pipe(
-            map((data) => changeLyrics({ lyrics: data.lyrics })),
+            map((data) => changeLyrics({ lyrics: (data as ILyrics).lyrics })),
 
             catchError((error) => of(getLyricsFail({ error: error })))
           )
@@ -43,10 +46,8 @@ export class metadataEffects {
     this.actions$.pipe(
       ofType(getItem),
       switchMap(({ payload }) =>
-        this.http
-          .get<ITrack>(
-            `${environment.serverUrl}/view/${payload.itemType}/${payload.id}`
-          )
+        from(fetch(`https://api.deezer.com/${payload.itemType}/${payload.id}`))
+          .pipe(map((response) => response.data))
           .pipe(
             map((data) => changeItemMetadata({ item: mapToICard(data) })),
 
@@ -60,10 +61,12 @@ export class metadataEffects {
     this.actions$.pipe(
       ofType(getAlbums),
       switchMap(({ payload }) =>
-        this.http
-          .get<any>(`${environment.serverUrl}/albums/${payload.artistID}`)
+        from(fetch(`https://api.deezer.com/artist/${payload.artistID}/albums`))
+          .pipe(map((response) => response.data))
           .pipe(
-            map((res) => changeAlbums({ albums: res.data.map(mapToICard) })),
+            map((res) =>
+              changeAlbums({ albums: (res as any).data.map(mapToICard) })
+            ),
 
             catchError((error) => of(getAlbumsFail({ error: error })))
           )
