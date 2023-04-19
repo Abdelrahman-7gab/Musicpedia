@@ -6,28 +6,32 @@ import { SearchService } from 'src/app/services/search.service';
   styleUrls: ['./music-search.component.scss'],
 })
 export class MusicSearchComponent implements OnInit {
+  searchType:string = "track";
   constructor(public searchService: SearchService) {}
+
+
 
   ngOnInit(): void {}
 
   AorAn(word: string): string {
+    const firstLetter = word.charAt(0)
     if (
-      word.charAt(0) !== 'a' &&
-      word.charAt(0) !== 'o' &&
-      word.charAt(0) !== 'u' &&
-      word.charAt(0) !== 'e' &&
-      word.charAt(0) !== 'i'
+      firstLetter !== 'a' &&
+      firstLetter !== 'o' &&
+      firstLetter !== 'u' &&
+      firstLetter !== 'e' &&
+      firstLetter !== 'i'
     )
       return 'a ' + word;
 
     return 'an ' + word;
   }
 
-  setSearchParam(param: string): void {
-    this.searchService.searchType = param;
+  setSearchType(type: string): void {
+    this.searchType = type;
   }
 
   startSearch(word: string): void {
-    this.searchService.startSearch(word);
+    this.searchService.startSearch(word,this.searchType);
   }
 }

@@ -15,14 +15,11 @@ export class AppComponent {
     public searchService: SearchService
   ) {
     this.route.queryParams.subscribe(async (params) => {
-      const searchQuery = params['sq'];
+      let searchQuery = params['q'];
 
-      this.searchService.searchType = params['st'] || 'track';
-      this.searchService.query = searchQuery || '';
-      this.searchService.viewType = params['vt'] || '';
-      this.searchService.viewQuery = params['vq'] || '';
+      let searchType = params['t'] || 'track';
 
-      if (searchQuery != null) this.searchService.getSearchResults();
+      if (searchQuery != null) this.searchService.getSearchResults(searchType,searchQuery);
     });
   }
 }
