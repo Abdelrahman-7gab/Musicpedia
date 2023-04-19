@@ -18,7 +18,7 @@ export class searchEffects {
         ofType(getSearchResults),
         switchMap(({ payload }) =>
             this.http.get<TrackAPI>(
-                `${environment.serverUrl}/search/${payload.queryType}/${payload.query}`
+                `${environment.serverUrl}/search?type=${payload.queryType}&query=${payload.query}`
             ).pipe(map((results) => changeSearchResults({results:{...results, data : results.data.map(mapToICard)}})),
             
             catchError((error) => of(failedSearch({error:error})))),

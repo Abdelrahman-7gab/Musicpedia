@@ -28,10 +28,10 @@ export class metadataEffects {
       switchMap(({ payload }) =>
         this.http
           .get<ILyrics>(
-            `${environment.lyricsURL}/${payload.artist}/${payload.title}`
+            `${environment.lyricsURL}?artist=${payload.artist}&title=${payload.title}`
           )
           .pipe(
-            map((data) => changeLyrics({ lyrics: data.lyrics })),
+            map((data) => changeLyrics({ lyrics: data })),
 
             catchError((error) => of(getLyricsFail({ error: error })))
           )
@@ -45,7 +45,7 @@ export class metadataEffects {
       switchMap(({ payload }) =>
         this.http
           .get<ITrack>(
-            `${environment.serverUrl}/view/${payload.itemType}/${payload.id}`
+            `${environment.serverUrl}/view?type=${payload.itemType}&id=${payload.id}`
           )
           .pipe(
             map((data) => changeItemMetadata({ item: mapToICard(data) })),
@@ -61,7 +61,7 @@ export class metadataEffects {
       ofType(getAlbums),
       switchMap(({ payload }) =>
         this.http
-          .get<any>(`${environment.serverUrl}/albums/${payload.artistID}`)
+          .get<any>(`${environment.serverUrl}/albums?artistID=${payload.artistID}`)
           .pipe(
             map((res) => changeAlbums({ albums: res.data.map(mapToICard) })),
 

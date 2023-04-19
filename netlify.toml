@@ -1,0 +1,24 @@
+[build]
+  publish = "dist/angular-netlify-functions-starter"
+  command = "ng build --prod"
+  edge_functions = "netlify_edge_functions/"
+
+[[edge_functions]]
+path = "/api/search"
+function = "search"
+
+[[edge_functions]]
+path = "/api/view"
+function = "view"
+
+[[edge_functions]]
+path = "/api/albums"
+function = "getAlbums"
+
+[[edge_functions]]
+path = "/api/lyrics"
+function = "lyrics"
+    
+
+
+  
