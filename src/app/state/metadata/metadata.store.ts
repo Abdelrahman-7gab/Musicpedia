@@ -25,7 +25,7 @@ const metadataSlice = createSlice({
   initialState,
   reducers: {
     getLyrics: (state, _action) => {
-      state.lyrics="";
+    state.lyrics="Trying to get Lyrics ...";
       state.status = 'loadingLyrics';
     },
     changeLyrics: (state, action) => {
