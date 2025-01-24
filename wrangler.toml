@@ -1,0 +1,12 @@
+name = "deezer-proxy"
+main = "src/worker.js"
+compatibility_date = "2024-03-26"
+
+[build.upload]
+format = "service-worker"
+
+# Add any environment variables here
+[vars]
+DEEZER_API = "https://api.deezer.com"
+
+node_compat = true

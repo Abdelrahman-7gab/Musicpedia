@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  serverUrl:"api",
-  lyricsURL:"api/lyrics"
+  serverUrl:"http://localhost:8787/api",
+  lyricsURL:"http://localhost:8787/api/lyrics",
 };
 
 /*

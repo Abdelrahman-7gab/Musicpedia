@@ -1,6 +1,6 @@
 <div class="trackPageContainer">
   <app-card *ngIf="(status$|async) !='loadingItem' " [result]="(song$|async)"></app-card>
-    <div class="lyricsContainer" [innerHTML]="(lyrics$ | async)"></div>
+    <div class="lyricsContainer" [innerText]="(lyrics$ | async)"></div>
 
   <div class="deezer">
     Release Date: {{ (song$|async)?.release_date }}<br />
