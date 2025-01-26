@@ -6,7 +6,7 @@ The backend is a simple NodeJs Server that utilizes Deezer API for songs and Gen
 
 You can visit the website here :
 
-[https://musicpedia.live](https://musicpediaa.netlify.app/)
+[Musicpedia](https://musicpedia.abdelrahman-hegab.com/)
 
 ![image](https://user-images.githubusercontent.com/63824808/174686950-b281c772-57e6-4ce1-8ffc-17b3286a5fd7.png)
 
