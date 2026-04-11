@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  serverUrl:"http://localhost:8787/api",
-  lyricsURL:"http://localhost:8787/api/lyrics",
+  serverUrl:"https://deezerproxy.abdelrahman-hegab.com/api",
+  lyricsURL:"https://deezerproxy.abdelrahman-hegab.com/api/lyrics"
 };
 
 /*
