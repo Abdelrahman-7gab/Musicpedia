@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
 import { map, catchError, of } from 'rxjs';
@@ -27,16 +27,19 @@ export class metadataEffects {
       ofType(getLyrics),
       switchMap(({ payload }) =>
         this.http
-          .post<void>(
+          .post<{ token: string }>(
             `${environment.serverUrl}/lyrics/session`,
-            null,
-            { withCredentials: true }
+            null
           )
           .pipe(
-            switchMap(() =>
+            switchMap(({ token }) =>
               this.http.get<string>(
                 `${environment.lyricsURL}?artist=${payload.artist}&title=${payload.title}`,
-                { withCredentials: true }
+                {
+                  headers: new HttpHeaders({
+                    Authorization: `Bearer ${token}`
+                  })
+                }
               )
             ),
             map((data) => changeLyrics({ lyrics: data })),

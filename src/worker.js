@@ -5,7 +5,6 @@ import { handleLyrics } from './handlers/lyrics.js';
 
 const LYRICS_ROUTE = '/api/lyrics';
 const LYRICS_SESSION_ROUTE = '/api/lyrics/session';
-const SESSION_COOKIE_NAME = 'mp_lyrics_session';
 const SESSION_TTL_SECONDS = 60 * 10;
 const ALLOWED_LYRICS_ORIGINS = new Set([
   'https://musicpedia.abdelrahman-hegab.com',
@@ -26,9 +25,8 @@ const createLyricsCorsHeaders = (origin) => {
 
   return {
     'Access-Control-Allow-Origin': origin,
-    'Access-Control-Allow-Credentials': 'true',
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     'Access-Control-Max-Age': '86400',
     Vary: 'Origin'
   };
@@ -58,26 +56,6 @@ const fromBase64Url = (value) => {
   }
 
   return bytes;
-};
-
-const parseCookies = (request) => {
-  const cookieHeader = request.headers.get('Cookie') ?? '';
-  const pairs = cookieHeader
-    .split(';')
-    .map((value) => value.trim())
-    .filter(Boolean);
-  const cookies = {};
-
-  for (const pair of pairs) {
-    const separatorIndex = pair.indexOf('=');
-    if (separatorIndex === -1) continue;
-
-    const name = pair.slice(0, separatorIndex).trim();
-    const value = pair.slice(separatorIndex + 1).trim();
-    cookies[name] = value;
-  }
-
-  return cookies;
 };
 
 const getClientIp = (request) => request.headers.get('CF-Connecting-IP') ?? '';
@@ -172,11 +150,11 @@ const verifySessionToken = async (token, request, env, origin) => {
   }
 };
 
-const createSessionCookie = (token) =>
-  `${SESSION_COOKIE_NAME}=${token}; HttpOnly; Secure; SameSite=None; Path=${LYRICS_ROUTE}; Max-Age=${SESSION_TTL_SECONDS}`;
-
-const createExpiredSessionCookie = () =>
-  `${SESSION_COOKIE_NAME}=; HttpOnly; Secure; SameSite=None; Path=${LYRICS_ROUTE}; Max-Age=0`;
+const getAuthorizationToken = (request) => {
+  const authorization = request.headers.get('Authorization') ?? '';
+  const match = authorization.match(/^Bearer\s+(.+)$/i);
+  return match?.[1] ?? null;
+};
 
 const handleLyricsSession = async (request, env, origin) => {
   if (!env.LYRICS_SESSION_SECRET) {
@@ -202,12 +180,13 @@ const handleLyricsSession = async (request, env, origin) => {
 
   const token = await createSessionToken(request, env, origin);
 
-  return new Response(null, {
-    status: 204,
+  return Response.json({
+    token,
+    expiresIn: SESSION_TTL_SECONDS
+  }, {
     headers: {
       ...createLyricsCorsHeaders(origin),
-      'Cache-Control': 'private, no-store',
-      'Set-Cookie': createSessionCookie(token)
+      'Cache-Control': 'private, no-store'
     }
   });
 };
@@ -256,16 +235,13 @@ export default {
         if (!isTrustedBrowserRequest(request, lyricsOrigin)) {
           return new Response('Forbidden', {
             status: 403,
-            headers: {
-              ...createLyricsCorsHeaders(lyricsOrigin),
-              'Set-Cookie': createExpiredSessionCookie()
-            }
+            headers: createLyricsCorsHeaders(lyricsOrigin)
           });
         }
 
         if (
           !(await verifySessionToken(
-            parseCookies(request)[SESSION_COOKIE_NAME],
+            getAuthorizationToken(request),
             request,
             env,
             lyricsOrigin
@@ -273,10 +249,7 @@ export default {
         ) {
           return new Response('Forbidden', {
             status: 403,
-            headers: {
-              ...createLyricsCorsHeaders(lyricsOrigin),
-              'Set-Cookie': createExpiredSessionCookie()
-            }
+            headers: createLyricsCorsHeaders(lyricsOrigin)
           });
         }
 
