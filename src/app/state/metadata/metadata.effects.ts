@@ -15,7 +15,7 @@ import {
   changeAlbums,
 } from './metadata.store';
 import { switchMap } from 'rxjs';
-import { IAlbum, ILyrics, ITrack } from 'src/app/services/Imusic';
+import { ITrack } from 'src/app/services/Imusic';
 import { mapToICard } from 'src/app/services/Imusic';
 
 @Injectable()
@@ -27,10 +27,18 @@ export class metadataEffects {
       ofType(getLyrics),
       switchMap(({ payload }) =>
         this.http
-          .get<ILyrics>(
-            `${environment.lyricsURL}?artist=${payload.artist}&title=${payload.title}`
+          .post<void>(
+            `${environment.serverUrl}/lyrics/session`,
+            null,
+            { withCredentials: true }
           )
           .pipe(
+            switchMap(() =>
+              this.http.get<string>(
+                `${environment.lyricsURL}?artist=${payload.artist}&title=${payload.title}`,
+                { withCredentials: true }
+              )
+            ),
             map((data) => changeLyrics({ lyrics: data })),
 
             catchError((error) => of(getLyricsFail({ error: error })))

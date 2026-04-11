@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  serverUrl:"/api",
-  lyricsURL:"/api/lyrics"
+  serverUrl:"https://deezerproxy.abdelrahman-hegab.com/api",
+  lyricsURL:"https://deezerproxy.abdelrahman-hegab.com/api/lyrics"
 
 };
